@@ -60,6 +60,7 @@ namespace broccoli.Cards
         {
             if (_iconImage != null && _iconSprite != null)
                 _iconImage.sprite = _iconSprite;
+                
             _isSelected = true;
         }
 
