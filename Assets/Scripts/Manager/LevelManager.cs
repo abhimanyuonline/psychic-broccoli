@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using broccoli.Controller;
+using broccoli.Manager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Zenject;
 public class LevelManager : MonoBehaviour
 {
     [Header("Button Settings")]
-    public GameObject buttonPrefab; // Assign a UI Button prefab in the inspector
-    public Transform buttonParent;  // Assign a UI layout group or RectTransform in the inspector
+    public GameObject buttonPrefab; 
+    public Transform buttonParent;  
     Dictionary<Vector2Int, int> grid = new Dictionary<Vector2Int, int>();
+
+    [SerializeField] GridLayoutGroup gridLayoutGroup;
+
+    [Inject] GameManger _gameManager;
+    [Inject] CardController _cardConroller;
 
     // Struct to hold button and its X/Y values
     private struct ButtonData
@@ -50,9 +57,13 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // Example button click handler
-    void OnButtonClicked(Vector2Int coords )
+    void OnButtonClicked(Vector2Int coords)
     {
-        Debug.Log($"Button clicked! X: {coords.x}, Y: {coords.y}");
+        gridLayoutGroup.constraintCount = coords.y;
+        _gameManager.InitalizeGameScreen();
+
+        int maxPair = (coords.x * coords.y)/ 2;
+        _cardConroller.PrepareSprites(maxPair);
+        
     }
 }

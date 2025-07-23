@@ -20,24 +20,25 @@ namespace broccoli.Controller
         #region Unity Methods
         private void Start()
         {
-            PrepareSprites();
-            CreateCards();
+            
         }
         #endregion
 
         /// <summary>
         /// Prepares the sprite pairs for the card game by duplicating and shuffling them.
         /// </summary>
-        private void PrepareSprites()
+        public void PrepareSprites(int pairsCount)
         {
             _spritePairs = new List<Sprite>();
-            foreach (var sprite in sprites)
+            for (int i = 0; i < pairsCount; i++)
             {
+                var sprite = sprites[i];
                 // Add each sprite twice to create pairs
                 _spritePairs.Add(sprite);
                 _spritePairs.Add(sprite);
-            }
+            } 
             ShuffleSprites(_spritePairs);
+            CreateCards();
         }
 
         /// <summary>

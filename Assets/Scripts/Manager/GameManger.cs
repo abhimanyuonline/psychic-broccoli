@@ -12,13 +12,19 @@ namespace broccoli.Manager
 
         void Start()
         {
-
+            InitialScreenSetUp();
         }
 
         void InitialScreenSetUp()
         {
             MenuScreen.SetActive(true);
             GameScreen.SetActive(false);
+        }
+
+        public void InitalizeGameScreen()
+        {
+            MenuScreen.SetActive(false);
+            GameScreen.SetActive(true);
         }
 
 
