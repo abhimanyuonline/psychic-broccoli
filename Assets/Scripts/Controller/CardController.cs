@@ -59,6 +59,8 @@ namespace broccoli.Controller
                 Card card = Instantiate(cardPrefab, gridTransform);
                 card.SetIconSprite(_spritePairs[i]);
                 card.Controller = this;
+                card.Show();
+                Tween.Delay(1.0f, () => card.Hide());
             }
         }
 

@@ -2548,7 +2548,7 @@ MonoBehaviour:
   musicSounds:
   - name: BG
     clip: {fileID: 8300000, guid: 32a78f11255344e6fbca062ec20fea8d, type: 3}
-    volume: 0.535
+    volume: 0.2
     mute: 0
   sfxSounds:
   - name: Button

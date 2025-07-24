@@ -50,7 +50,6 @@ namespace broccoli.Cards
             var button = GetComponent<Button>();
             if (button != null)
                 button.onClick.AddListener(OnCardClick);
-            Hide();
         }
         #endregion
 
