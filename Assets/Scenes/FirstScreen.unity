@@ -2228,8 +2228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 275fbfbc333ce43cd92c717838e3960f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuScreen: {fileID: 293103315}
-  GameScreen: {fileID: 420347654}
+  menuScreen: {fileID: 293103315}
+  gameScreen: {fileID: 420347654}
 --- !u!4 &1630569048
 Transform:
   m_ObjectHideFlags: 0
