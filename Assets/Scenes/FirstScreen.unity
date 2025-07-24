@@ -780,7 +780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda41a1bf462a409d955615c894031aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseBuuton: {fileID: 1924453431}
+  pauseButton: {fileID: 1924453431}
   menuButton: {fileID: 2112725137}
   resumeButton: {fileID: 2118114142}
   quitButton: {fileID: 759001116}

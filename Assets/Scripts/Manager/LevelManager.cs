@@ -16,8 +16,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] GridLayoutGroup gridLayoutGroup;
 
-    [Inject] GameManger _gameManager;
-    [Inject] CardController _cardConroller;
+    [Inject] GameManager gameManager;
+    [Inject] CardController cardConroller;
     [Inject] SoundManager soundManager;
 
     // Struct to hold button and its X/Y values
@@ -63,10 +63,10 @@ public class LevelManager : MonoBehaviour
     {
         soundManager.PlaySfx("Button");
         gridLayoutGroup.constraintCount = coords.y;
-        _gameManager.InitalizeGameScreen();
+        gameManager.InitializeGameScreen();
 
         int maxPair = (coords.x * coords.y)/ 2;
-        _cardConroller.PrepareSprites(maxPair);
+        cardConroller.PrepareSprites(maxPair);
         
     }
     

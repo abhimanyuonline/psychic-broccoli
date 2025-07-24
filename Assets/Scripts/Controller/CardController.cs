@@ -5,7 +5,7 @@ using UnityEngine;
 using PrimeTween;
 using Zenject;
 using broccoli.Manager.Audio;
-using broccoli.Presenster;
+using broccoli.Presenter;
 
 namespace broccoli.Controller
 {
