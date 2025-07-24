@@ -46,6 +46,7 @@ namespace broccoli.Controller
             }
             ShuffleSprites(_spritePairs);
             CreateCards();
+            _matchCount = 0;
         }
 
         /// <summary>
@@ -99,14 +100,18 @@ namespace broccoli.Controller
                 {
                     Debug.Log("All pairs matched! Game complete.");
                     PrimeTween.Sequence.Create().Chain(PrimeTween.Tween.Scale(gridTransform, Vector3.one * 1.2f, 0.2f, ease: Ease.OutBack))
-                                                .Chain(Tween.Scale(gridTransform, Vector3.one, 0.1f));
+                                                .Chain(Tween.Scale(gridTransform, Vector3.one, 0.1f))
+                                                .Chain(Tween.Delay(2.0f, () =>
+                                                {
+                                                    gamePresenter.EndGameScreen();
+                                                }));
                     soundManager.PlaySfx("Completed");
-                    gamePresenter.EndGameScreen();
                 }
                 else
                 {
                     soundManager.PlaySfx("Correct");
                 }
+                gamePresenter.scoreText.text = _matchCount.ToString();
             }
             else
             {

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using broccoli.Manager;
 using Zenject;
 using broccoli.Manager.Audio;
+using TMPro;
 
 namespace broccoli.Presenster
 {
@@ -16,6 +17,8 @@ namespace broccoli.Presenster
         [SerializeField] Button quitButton;
         [SerializeField] GameObject pausePanel;
         [SerializeField] GameObject endGamePanel;
+        public TMP_Text scoreText ;
+        public TMP_Text highScoreText;
         [Inject] GameManger _gameManager;
         [Inject] SoundManager soundManager;
 
@@ -61,6 +64,22 @@ namespace broccoli.Presenster
         {
             pausePanel.SetActive(false);
             endGamePanel.SetActive(true);
+            CheckAndUpadateHighScore();
+        }
+
+        public void CheckAndUpadateHighScore()
+        {
+            var score = PlayerPrefs.GetInt("Score");
+            var currentScore = int.Parse(scoreText.text);
+            if (score < currentScore)
+            {
+                PlayerPrefs.SetInt("Score", currentScore);
+                highScoreText.text = scoreText.text.ToString();
+            }
+            else
+            {
+                highScoreText.text = score.ToString();
+            }
         }
 
         void PlayButtonSound(){

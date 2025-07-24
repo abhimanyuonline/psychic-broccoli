@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using broccoli.Controller;
 using broccoli.Manager.Audio;
+using broccoli.Presenster;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,7 @@ namespace broccoli.Manager
 
         [Inject] CardController _cardConroller;
         [Inject] SoundManager soundManager;
+        [Inject] GamePresenter gamePresenter;
 
         void Start()
         {
@@ -24,8 +26,9 @@ namespace broccoli.Manager
 
         public void InitialScreenSetUp()
         {
-            
+
             _cardConroller.ClearOldGrids();
+            gamePresenter.scoreText.text = "0";
             MenuScreen.SetActive(true);
             GameScreen.SetActive(false);
         }
@@ -35,7 +38,6 @@ namespace broccoli.Manager
             MenuScreen.SetActive(false);
             GameScreen.SetActive(true);
         }
-
 
 
     }
