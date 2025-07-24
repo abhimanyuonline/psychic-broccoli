@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using broccoli.Controller;
 using broccoli.Manager;
+using broccoli.Manager.Audio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ public class LevelManager : MonoBehaviour
 
     [Inject] GameManger _gameManager;
     [Inject] CardController _cardConroller;
+    [Inject] SoundManager soundManager;
 
     // Struct to hold button and its X/Y values
     private struct ButtonData
@@ -28,7 +30,6 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        AssignGridValues();
         CreateButtons();
     }
 
@@ -39,8 +40,9 @@ public class LevelManager : MonoBehaviour
         grid[new Vector2Int(2, 3)] = 1;
         grid[new Vector2Int(5, 6)] = 2;
     }
-     void CreateButtons()
+    public void CreateButtons()
     {
+        AssignGridValues();
         foreach (var kvp in grid)
         {
             Vector2Int coords = kvp.Key;
@@ -50,8 +52,8 @@ public class LevelManager : MonoBehaviour
             // Set button text to show X/Y
             TMP_Text btnText = btnObj.GetComponentInChildren<TMP_Text>();
             if (btnText != null)
-                btnText.text = $" {coords.x} X {coords.y}";
-                
+                btnText.text = $"{coords.x} X {coords.y}";
+
             btn.onClick.AddListener(() => OnButtonClicked(coords));
 
         }
@@ -59,6 +61,7 @@ public class LevelManager : MonoBehaviour
 
     void OnButtonClicked(Vector2Int coords)
     {
+        soundManager.PlaySfx("Button");
         gridLayoutGroup.constraintCount = coords.y;
         _gameManager.InitalizeGameScreen();
 
@@ -66,4 +69,5 @@ public class LevelManager : MonoBehaviour
         _cardConroller.PrepareSprites(maxPair);
         
     }
+    
 }

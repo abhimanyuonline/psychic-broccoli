@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using broccoli.Controller;
 using UnityEngine;
 using UnityEngine.UI;
+using PrimeTween;
 
 namespace broccoli.Cards
 {
@@ -58,10 +59,19 @@ namespace broccoli.Cards
         /// </summary>
         public void Show()
         {
-            if (_iconImage != null && _iconSprite != null)
-                _iconImage.sprite = _iconSprite;
+            if (_iconImage == null && _iconSprite == null)
+                return;
                 
-            _isSelected = true;
+
+            Tween.Rotation(transform,
+                new Vector3(0f, 180f, 0f),
+                0.2f);
+
+            Tween.Delay(0.1f, () =>
+            {
+                _iconImage.sprite = _iconSprite;
+                _isSelected = true;
+            });
         }
 
         /// <summary>
@@ -69,9 +79,16 @@ namespace broccoli.Cards
         /// </summary>
         public void Hide()
         {
-            if (_iconImage != null && _hiddenIconSprite != null)
+            if (_iconImage == null && _hiddenIconSprite == null)
+                return;
+            
+            Tween.Rotation(transform, new Vector3(0f, 0.1f, 0f), 0.2f);
+            Tween.Delay(0.1f, () =>
+            {
                 _iconImage.sprite = _hiddenIconSprite;
-            _isSelected = false;
+                _isSelected = false;
+            });
+                
         }
 
         /// <summary>
