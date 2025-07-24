@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using broccoli.Cards;
 using UnityEngine;
+using PrimeTween;
+using Zenject;
+using broccoli.Manager.Audio;
+using broccoli.Presenster;
 
 namespace broccoli.Controller
 {
@@ -17,10 +21,13 @@ namespace broccoli.Controller
         private Card _secondSelected;
         private int _matchCount = 0;
 
+        [Inject] SoundManager soundManager;
+        [Inject] GamePresenter gamePresenter;
+
         #region Unity Methods
         private void Start()
         {
-            
+
         }
         #endregion
 
@@ -36,9 +43,10 @@ namespace broccoli.Controller
                 // Add each sprite twice to create pairs
                 _spritePairs.Add(sprite);
                 _spritePairs.Add(sprite);
-            } 
+            }
             ShuffleSprites(_spritePairs);
             CreateCards();
+            _matchCount = 0;
         }
 
         /// <summary>
@@ -91,13 +99,25 @@ namespace broccoli.Controller
                 if (_matchCount >= _spritePairs.Count / 2)
                 {
                     Debug.Log("All pairs matched! Game complete.");
+                    PrimeTween.Sequence.Create().Chain(PrimeTween.Tween.Scale(gridTransform, Vector3.one * 1.2f, 0.2f, ease: Ease.OutBack))
+                                                .Chain(Tween.Scale(gridTransform, Vector3.one, 0.1f))
+                                                .Chain(Tween.Delay(2.0f, () =>
+                                                {
+                                                    gamePresenter.EndGameScreen();
+                                                }));
+                    soundManager.PlaySfx("Completed");
                 }
-                // Optionally: Add logic for matched cards (e.g., disable interaction)
+                else
+                {
+                    soundManager.PlaySfx("Correct");
+                }
+                gamePresenter.scoreText.text = _matchCount.ToString();
             }
             else
             {
                 a.Hide();
                 b.Hide();
+                soundManager.PlaySfx("Wrong");
             }
         }
 
@@ -112,6 +132,14 @@ namespace broccoli.Controller
                 Sprite temp = spriteList[i];
                 spriteList[i] = spriteList[randomIndex];
                 spriteList[randomIndex] = temp;
+            }
+        }
+
+        public void ClearOldGrids()
+        {
+            foreach (Transform child in gridTransform)
+            {
+                Destroy(child.gameObject);
             }
         }
     }
